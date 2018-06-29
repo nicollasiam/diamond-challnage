@@ -55,5 +55,17 @@ RSpec.describe Diamond do
         end
       end
     end
+
+    context "when given an empty string" do
+      let(:input) { '' }
+
+      it { is_expected.to eq('') }
+    end
+
+    context "when given a non string input" do
+      let(:input) { 1 }
+
+      it { is_expected.to eq('') }
+    end
   end
 end

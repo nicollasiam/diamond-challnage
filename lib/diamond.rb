@@ -1,38 +1,54 @@
 class Diamond
   def build(max_letter)
+    return '' if max_letter.class != String
+    return '' if max_letter.empty?
+
     @letters = ('A' .. max_letter.upcase).to_a
 
-    representation
+    diamond_maker
   end
 
   private
 
-  def either_letter_or_blank (position, letter)
-    (position == letter) ? letter : '_'
+  def diamond_maker
+    diamond = []
+
+    # Build the diamond's first half
+    # And the middle line
+    @letters.each { |array_letter|
+      diamond << new_line(array_letter)
+    }
+
+    # The Diamond base is exactly the same
+    # of the first half, minus the middle line.
+    # Just insert the first half (minus the middle(last) line)
+    # and reverse it.
+    diamond << diamond[0..-2].reverse
+
+    # Make it a one-dimentional string
+    diamond.join
   end
 
-  def line_for_letter (letter)
-    line= ""
-    @letters.reverse.each { |position|
-      line << either_letter_or_blank(position, letter)
+  def letter_or_underscore(array_letter, letter)
+    (array_letter == letter) ? letter : '_'
+  end
+
+  def new_line(letter)
+    line = []
+
+    # First half of the line
+    @letters.reverse.each { |array_letter|
+      line << letter_or_underscore(array_letter, letter)
     }
-    @letters[1..-1].each { |position|
-      line << either_letter_or_blank(position, letter)
+
+    # Last half of the line
+    @letters[1..-1].each { |reverserd_array_letter|
+      line << letter_or_underscore(reverserd_array_letter, letter)
     }
+
     line << "\n"
-  end
-
-  def representation
-    output= ""
-    @letters.each { |letter|
-      output << line_for_letter(letter)
-    }
-    @letters.reverse[1..-1].each { |letter|
-      output << line_for_letter(letter)
-    }
-    output
   end
 end
 
 d = Diamond.new
-puts d.build('')
+puts d.build('n')
