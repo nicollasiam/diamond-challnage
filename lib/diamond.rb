@@ -49,6 +49,3 @@ class Diamond
     line << "\n"
   end
 end
-
-d = Diamond.new
-puts d.build('n')
